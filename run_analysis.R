@@ -1,6 +1,6 @@
 ##Course Project Getting and Cleaning Data
 
-
+library(plyr)
 
 filename <- "zipfile.zip"            ## Download and unzip the dataset
 if (!file.exists(filename)){
@@ -32,7 +32,6 @@ for (i in 1:6){                                                         ##Insert
 
 datawanted$activity<-as.factor(datawanted$activity)             ## Converts activity variable into a factor to use xtabs function
 datawanted$subject<-as.factor(datawanted$subject)               ## Converts subject variable into a factor to use xtabs function
-Allaverage<-xtabs(mean~activity+subject,data=datawanted)    ## Crosstable activity vs subject (mean)
-
+Allaverage<-aggregate(datawanted, by=list(activity = datawanted$activity, subject=datawanted$subject), mean)  ## Crosstable activity vs subject (mean)
 write.table(Allaverage, "tidy.txt", row.names = FALSE, quote = FALSE)  ## Creates the file in the working directory with the tidy data
 
